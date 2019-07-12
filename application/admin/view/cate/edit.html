@@ -1,0 +1,117 @@
+{include file="public/head"}
+<!-- /头部 -->
+
+<div class="main-container container-fluid">
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left"}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">系统</a>
+                    </li>
+                    <li>
+                        <a href="{:url('cate/index')}">栏目管理</a>
+                    </li>
+                    <li class="active">添加栏目</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+
+            <!-- Page Body -->
+            <div class="page-body">
+
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">修改栏目</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form" action="" method="post" action="{:url('cate/add')}">
+
+                                        <input type="hidden" name="id" value="{$info.id}">
+                                        <div class="form-group">
+                                            <label for="pid" class="col-sm-2 control-label no-padding-right">上级栏目</label>
+                                            <div class="col-sm-6">
+                                                <select name="pid">
+                                                    <option value="0">顶级栏目</option>
+                                                    {volist name="cates" id="vo"}
+                                                    <option {if condition="$info.pid eq $vo.id"} selected{/if} value="{$vo.id}">{if condition="$vo['level'] neq 0"}
+                                                        |
+                                                        {/if}
+                                                        <?php echo str_repeat('--',$vo['level'])?>{$vo.catename}</option>
+                                                    {/volist}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="catename" class="col-sm-2 control-label no-padding-right">栏目名称</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control"  placeholder="" name="catename" value="{$info.catename}" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keywords" class="col-sm-2 control-label no-padding-right">栏目关键词</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control"  placeholder="" name="keywords" value="{$info.keywords}" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="desc" class="col-sm-2 control-label no-padding-right">栏目描述</label>
+                                            <div class="col-sm-6">
+                                                <textarea name="desc"  class="form-control" id=""  cols="30" rows="10">{$info.desc}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="type" class="col-sm-2 control-label no-padding-right">栏目类型</label>
+                                            <div class="col-sm-6">
+                                                <div class="radio" style="float: left;margin-right: 10px;">
+                                                    <label>
+                                                        <input  {if condition="$info['type'] eq 1"} checked="checked"{/if}
+
+                                                                type="radio" name="type" value="1" class="inverted">
+                                                        <span class="text">列表栏目</span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio" style="float: left;margin-right: 10px;">
+                                                    <label>
+                                                        <input  {if condition="$info['type'] eq 2"} checked="checked"{/if}
+                                                                type="radio" name="type" value="2" class="inverted">
+                                                        <span class="text">单页栏目</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="content" class="col-sm-2 control-label no-padding-right">栏目内容</label>
+                                            <div class="col-sm-6">
+                                                <textarea name="content"  id="content"  cols="30" rows="10">{$info.content}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-default">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+    </div>
+</div>
+
+<!--Basic Scripts-->
+{include file="public/footer"}

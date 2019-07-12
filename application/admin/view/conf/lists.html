@@ -1,0 +1,103 @@
+{include file="public/head"}
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">系统</a>
+                        </li>
+                        <li>
+                            <a href="{:url('conf/index')}">配置管理</a>
+                        </li>
+                        <li class="active">配置管理
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加配置" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url('conf/add')}'">
+    <i class="fa fa-plus"></i> Add
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <form action="{:url('conf/order')}" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">排序值</th>
+                                <th class="text-center">配置中文名称</th>
+                                <th class="text-center">配置英文名称</th>
+                                <th class="text-center">配置类型</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="lists" id="vo"}
+                            <tr>
+                                <td align="center">{$vo.id}</td>
+                                <td align="center"><input type="text" name="{$vo.id}" style="width: 50px;text-align: center;" value="{$vo.sort}"></td>
+                                <td align="center">{$vo.cnname}</td>
+                                <td align="center">{$vo.enname}</td>
+                                <td align="center">
+                                    {if condition="$vo['type'] eq 1"}
+                                    单行文本
+                                    {elseif condition="$vo['type'] eq 2"}
+                                    多行文本
+                                    {elseif condition="$vo['type'] eq 3"}
+                                    单选按钮
+                                    {elseif condition="$vo['type'] eq 4"}
+                                    复选框
+                                    {else /}
+                                    下拉菜单
+                                    {/if}
+                                </td>
+                                <td align="center">
+                                    <a href="{:url('conf/edit',['id'=>$vo.id])}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="warning('确实要删除吗', '{:url('conf/delete ',['id'=>$vo.id])}')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                            {/volist}
+
+                        </tbody>
+                    </table>
+                    <div style="padding-right: 100px;">
+                        <input class="btn btn-primary btn-sm shiny" type="submit" value="排序">
+                    </div>
+                    </form>
+                </div>
+                <div style="padding-top: 10px;width: 230px;">
+                    {$lists->render()}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+{include file="public/footer"}

@@ -1,0 +1,90 @@
+{include file="public/head"}
+<!-- /头部 -->
+
+<div class="main-container container-fluid">
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        {include file="public/left"}
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">系统</a>
+                    </li>
+                    <li>
+                        <a href="{:url('conf/index')}">配置管理</a>
+                    </li>
+                    <li class="active">编辑配置</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+
+            <!-- Page Body -->
+            <div class="page-body">
+
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">编辑配置</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form"  method="post" action="{:url('conf/edit')}">
+                                        <input type="hidden" name="id" value="{$info.id}">
+                                        <div class="form-group">
+                                            <label for="cnname" class="col-sm-2 control-label no-padding-right">配置中文名称</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" value="{$info.cnname}" placeholder="" name="cnname" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="enname" class="col-sm-2 control-label no-padding-right">配置英文名称</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control"  value="{$info.enname}"  placeholder="" name="enname" required="" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="type" class="col-sm-2 control-label no-padding-right">配置类型</label>
+                                            <div class="col-sm-6">
+                                                <select  disabled  name="type" >
+                                                    <option  value="0">请选择</option>
+                                                    <option {if condition="$info['type'] eq 1"} selected {/if} value="1">单行文本</option>
+                                                    <option {if condition="$info['type'] eq 2"} selected {/if} value="2">多行文本</option>
+                                                    <option {if condition="$info['type'] eq 3"} selected {/if} value="3">单选按钮</option>
+                                                    <option {if condition="$info['type'] eq 4"} selected {/if} value="4">复选框</option>
+                                                    <option {if condition="$info['type'] eq 5"} selected {/if} value="5">下拉菜单</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description" class="col-sm-2 control-label no-padding-right">配置值</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" name="values" id="" cols="30" rows="10">{$info.values}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-default">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /Page Body -->
+        </div>
+        <!-- /Page Content -->
+    </div>
+</div>
+
+<!--Basic Scripts-->
+{include file="public/footer"}

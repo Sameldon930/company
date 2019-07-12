@@ -1,0 +1,118 @@
+{include file="public/head"}
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+            <!-- Page Sidebar -->
+            {include file="public/left"}
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">系统</a>
+                        </li>
+                        <li>
+                            <a href="{:url('conf/index')}">配置管理</a>
+                        </li>
+                        <li class="active">配置管理
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加配置" class="btn btn-sm btn-azure btn-addon" >
+    网站配置项
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <form action="{:url('conf/conf')}" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+
+                                <th class="text-center">配置中文名称</th>
+                                <th class="text-center">配置值</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($confs as $v):?>
+                            <tr>
+                                <td align="center" width="10%"><?php echo $v['cnname'];?></td>
+                                <td align="center">
+                                    <?php if($v['type'] == 1):?>
+                                        <input type="text" name="<?php echo $v['enname'];?>" type="text" class="form-control" style="width:620px;" value="<?php echo $v['value'];?>">
+                                    <?php elseif($v['type'] == 2):?>
+                                        <textarea name="<?php echo $v['enname'];?>"  class="form-control" align="left" style="width:620px;" >
+                                            <?php echo $v['value'];?>
+                                        </textarea>
+                                    <?php elseif($v['type'] == 3):
+                                        if($v['values']){
+                                            $radio = explode(',',$v['values']);
+                                        }
+                                        foreach($radio as $v1):
+                                    ?>
+                                    <div class="radio" >
+                                        <label  style="margin-right: 15px;">
+                                            <input  <?php if($v['value'] == $v1){ echo 'checked';}?>  type="radio"   name="<?php echo $v['enname'];?>" value="<?php echo $v1;?>">
+                                            <span class="text"><?php echo $v1;?></span>
+                                        </label>
+                                    </div>
+                                    <?php endforeach;?>
+                                    <?php elseif($v['type'] == 4):?>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input <?php if($v['value'] == $v['values']){ echo 'checked';}?>  class="colored-success" name="<?php echo $v['enname'];?>" value="<?php echo $v['values'];?>"  type="checkbox">
+                                                <span class="text"><?php echo $v['values'];?></span>
+                                            </label>
+                                        </div>
+
+                                    <?php elseif($v['type'] == 5):
+                                        if($v['values']){
+                                            //将内容打散为数组
+                                            $select = explode(',',$v['values']);
+                                        }
+                                    ?>
+                                    <select name="<?php echo $v['enname'];?>" >
+                                        <?php foreach($select as $v2):?>
+                                        <option  <?php if($v['value'] == $v2){ echo 'selected';}?> value="<?php echo $v2;?>"><?php echo $v2;?></option>
+                                        <?php endforeach;?>
+                                    </select>
+
+                                    <?php endif;?>
+                                </td>
+
+                            </tr>
+                        <?php endforeach;?>
+                        </tbody>
+                    </table>
+                    <div align="right">
+                        <input class="btn btn-primary btn-sm shiny" style="margin-top:10px; margin-right: 40%;" type="submit" value="修改配置">
+                    </div>
+                    </form>
+                </div>
+                <div style="padding-top: 10px;width: 230px;">
+
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+{include file="public/footer"}
