@@ -27,7 +27,10 @@ class Admin extends  Base {
                 $this->error('添加管理员失败！');
             }
         }else{
-            return $this->fetch();
+            $groups = model('AuthGroup')->select();
+            return $this->fetch('',[
+                'groups'=>$groups
+            ]);
         }
 
 
@@ -44,12 +47,18 @@ class Admin extends  Base {
             }
 
         }else{
-            $info = model('Admin')->getAdminInfo($id);
+            $info = model('Admin')->getAdminInfo($id);//获取当前管理员信息
+            $groups = model('AuthGroup')->select();//获取所有分组
+            //获取管理员对应的分组id
+            $access = db('AuthGroupAccess')->where('uid='.$id)->find();
             if(!$info){
                 $this->error('管理员不存在！');
             }
             return $this->fetch('',[
-                'info'=>$info
+                'info'=>$info,
+                'groups'=>$groups,
+                'access'=>$access['group_id']
+
             ]);
         }
 

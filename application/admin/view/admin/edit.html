@@ -36,6 +36,16 @@
                                     <form class="form-horizontal" role="form" action="" method="post" action="{:url('admin/add')}">
                                         <input type="hidden" name="id" value="{$info.id}">
                                         <div class="form-group">
+                                            <label for="group_id" class="col-sm-2 control-label no-padding-right">管理员分组</label>
+                                            <div class="col-sm-6">
+                                                <select name="group_id" >
+                                                    {volist name="groups" id="vo"}
+                                                    <option  {if condition="$access eq $vo.id"} selected {/if}  value="{$vo.id}">{$vo.title}</option>
+                                                    {/volist}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="name" class="col-sm-2 control-label no-padding-right">管理员名称</label>
                                             <div class="col-sm-6">
                                                 <input class="form-control"  placeholder="" name="name" value="{$info.name}" required="" type="text">

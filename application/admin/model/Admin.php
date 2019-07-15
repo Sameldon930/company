@@ -13,7 +13,15 @@ class  Admin extends  Model{
         if($data['password']){
             $data['password'] = md5($data['password']);
         }
-        if($this->save($data)){
+        $adminData = array();
+        $adminData['name'] = $data['name'];
+        $adminData['password'] = $data['password'];
+
+        if($this->save($adminData)){
+            $groupAccess['uid'] = $this->id;
+            $groupAccess['group_id'] = $data['group_id'];
+            //配置好管理员和对应的角色到 管理员角色表
+            db('auth_group_access')->insert($groupAccess);
             return true;
         }else{
             return false;
@@ -31,6 +39,14 @@ class  Admin extends  Model{
 
     //更新id对应的数据
     public function  updateInfo($data){
+
+        $access = db('auth_group_access')->where('uid='.$data['id'])->update(['group_id'=>$data['group_id']]);
+        if(!$access){
+            db('auth_group_access')->insert([
+                'group_id'=>$data['group_id'],
+                'uid'=>$data['id']
+            ]);
+        }
         $data = [
           'id'=>$data['id'],
           'name'=>$data['name'],

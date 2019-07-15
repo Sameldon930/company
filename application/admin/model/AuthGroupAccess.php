@@ -3,7 +3,7 @@ namespace  app\admin\model;
 
 use think\Model;
 
-class  AuthGroup extends  Model{
+class  AuthGroupAccess extends  Model{
 
 
 }

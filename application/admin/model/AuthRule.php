@@ -29,6 +29,7 @@ class  AuthRule extends  Model{
         foreach($data as $k=>$v){
             //找出顶级权限
             if($v['pid'] == $pid ){
+                $v['dataid'] = $this->getParentId($v['id']);
                 $arr[] = $v;
                 //继续递归下级权限 以此类推
                 $this->sort($data,$v['id']);
@@ -64,6 +65,41 @@ class  AuthRule extends  Model{
             }
         }
         return $arr;
+
+    }
+
+
+    /**
+     * @param $cateId 权限id
+     * 根据id获取上级权限
+     */
+    public function getParentId($ruleId){
+        //获取所有权限
+        $ruleres = $this->select();//所有权限
+        return $this->_getParentId($ruleres,$ruleId,true);
+    }
+
+    /**
+     * @param $data 所有权限
+     * @param $ruleId  权限id
+     * 递归获取
+     */
+    public function _getParentId($data,$ruleId,$clear=false){
+        static  $arr = array();
+        if($clear){
+            $arr = array();
+        }
+        foreach ($data as $key =>$val){
+            //如果权限的id等于传过来的ruleId 那就是所传的id的子权限
+            if($val['id'] == $ruleId){
+                $arr[] = $val['id'];
+                $this->_getParentId($data,$val['pid'],false);
+            }
+        }
+//        升序排列
+        asort($arr);
+        $arrStr = implode('-',$arr);
+        return $arrStr;
 
     }
 }

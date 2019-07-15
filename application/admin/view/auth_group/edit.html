@@ -57,6 +57,36 @@
                                         <div class="form-group">
                                             <label  class="col-sm-2 control-label no-padding-right">用户组权限</label>
                                             <div class="col-sm-6">
+                                                <table class="table table-hover">
+                                                    <thead class="bordered-darkorange">
+                                                    <tr>
+                                                        <th>
+                                                            用户组权限
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {volist name="rules" id="vo"}
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                <?php echo str_repeat('&nbsp;',$vo['level']*3);?>
+                                                                <input name="rules[]" value="{$vo.id}"
+                                                                        <?php $arr = explode(',',$info['rules']);
+                                                                            if(in_array($vo['id'],$arr)){
+                                                                                echo 'checked';
+                                                                            }
+                                                                        ?>
+                                                                       dataid="id-{$vo.dataid}" class="inverted checkbox-parent {if condition="$vo['level'] neq 0 "} checkbox-child {/if} " type="checkbox">
+                                                                <span {if condition="$vo['level'] eq 0 "} style="font-weight: bold;font-size: 16px;" {/if} class="text">{$vo.title}</span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    {/volist}
+
+
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                         <div class="form-group">
