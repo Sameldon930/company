@@ -7,8 +7,17 @@ class Admin extends  Base {
 
     //列表页
     public function lists(){
-
-       $list =  model('Admin')->getAdmins();
+        $auth = new Auth();
+        //获取所有的管理员
+        $list =  model('Admin')->getAdmins();
+        foreach($list as $k => $v){
+            //获取所有分组得到分组名 然后拼接到管理员的数组中
+            $_groupTitle = $auth->getGroups($v['id']);
+            if($_groupTitle){
+                $groupTitle = $_groupTitle[0]['title'];
+                $v['group_name'] = $groupTitle;
+            }
+        }
         return $this->fetch('',[
             'lists'=>$list
         ]);

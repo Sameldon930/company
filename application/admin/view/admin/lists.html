@@ -38,6 +38,7 @@
                             <tr>
                                 <th class="text-center">ID</th>
                                 <th class="text-center">管理员名称</th>
+                                <th class="text-center">管理员分组</th>
                                 <th class="text-center">操作</th>
                             </tr>
                         </thead>
@@ -46,6 +47,7 @@
                             <tr>
                                 <td align="center">{$vo.id}</td>
                                 <td align="center">{$vo.name}</td>
+                                <td align="center">{$vo.group_name}</td>
                                 <td align="center">
                                     <a href="{:url('admin/edit',['id'=>$vo.id])}" class="btn btn-primary btn-sm shiny">
                                         <i class="fa fa-edit"></i> 编辑
